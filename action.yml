@@ -1,4 +1,4 @@
-description: Set up Node and npm
+description: Set up Node and pnpm
 inputs:
   working-directory:
     description: Working directory
@@ -25,9 +25,9 @@ runs:
       with:
         node-version: lts/*
         cache: pnpm
-        cache-dependency-path: ${{ inputs.cwd }}/pnpm-lock.yaml
+        cache-dependency-path: ${{ inputs.working-directory }}/pnpm-lock.yaml
 
     - name: Install dependencies
       run: pnpm install
-      working-directory: ${{ inputs.cwd }}
+      working-directory: ${{ inputs.working-directory }}
       shell: bash
