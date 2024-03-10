@@ -1,0 +1,33 @@
+description: Set up Node and npm
+inputs:
+  working-directory:
+    description: Working directory
+    required: false
+    default: .
+  node-version:
+    required: false
+    default: lts/*
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v3
+      with:
+        version: latest
+        run_install: false
+
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: pnpm
+        cache-dependency-path: ${{ inputs.cwd }}/pnpm-lock.yaml
+
+    - name: Install dependencies
+      run: pnpm install
+      working-directory: ${{ inputs.cwd }}
+      shell: bash
